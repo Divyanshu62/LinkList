@@ -14,7 +14,7 @@ import "fmt"
 
 type Node struct {
     next *Node
-    key  int
+    value  int
 }
 
 type List struct {
@@ -22,49 +22,49 @@ type List struct {
     tail *Node
 }
 
-func (L *List) PushKeyToList(key int) {
+func (ls *List) PushKeyToList(key int) {
 
   node := &Node{
-          key:  key,
+          value:  key,
       }
 
-    if L.head == nil {
-       L.head = node
+    if ls.head == nil {
+       ls.head = node
 
     } else {
-       L.tail.next = node
+       ls.tail.next = node
     }
-  L.tail = node
+    ls.tail = node
 }
 
-func (l *List) PrintList() {
-    list := l.head
+func (ls *List) PrintList() {
+    list := ls.head
 
     for list != nil {
-        fmt.Printf("%+v -> ", list.key)
+        fmt.Printf("%+v -> ", list.value)
         list = list.next
     }
 
 }
 
-func (l *List) RemoveLast() {
+func (ls *List) RemoveLast() {
 
 
-    list := l.head
+    list := ls.head
     if list == nil {
-      l.head = nil
-      l.tail = nil
+      ls.head = nil
+      ls.tail = nil
      } else {
       if list.next == nil {
-        l.head = nil
-        l.tail = nil
+        ls.head = nil
+        ls.tail = nil
       } else {
         for list != nil {
 
-             fmt.Printf("%+v -> ", list.key)
+             fmt.Printf("%+v -> ", list.value)
              if list.next.next == nil {
                list.next = nil
-               l.tail = list
+               ls.tail = list
                break
              }
 
@@ -74,29 +74,28 @@ func (l *List) RemoveLast() {
     }
 }
 
-func (l *List) GetElementByPos(pos int){
+func (ls *List) GetElementByPos(pos int){
 
-  list := l.head
+  list := ls.head
   count := 0
   for list != nil {
       count++
       if count == pos {
-         fmt.Printf("Key is %+v\n ", list.key)
+         fmt.Printf("Key is %+v\n ", list.value)
          break
       }
       list = list.next
   }
 }
 
-func (l *List) EditElementByPos(pos int){
+func (ls *List) EditElementByPos(pos int, val int){
 
-  list := l.head
+  list := ls.head
   count := 0
   for list != nil {
       count++
       if count == pos {
-
-        list.key = pos
+         list.value = val
          break
       }
       list = list.next
@@ -120,29 +119,37 @@ func main() {
       fmt.Scanln(&value)
 
       list.PushKeyToList(value)
+      fmt.Println("\n=====================\n")
       list.PrintList()
-
+      fmt.Println("\n=====================\n")
       goto here
     case 2:
       var pos int
       fmt.Println("Enter position to get : ")
       fmt.Scanln(&pos)
+      fmt.Println("\n=====================\n")
       list.GetElementByPos(pos)
-
+      fmt.Println("\n=====================\n")
       goto here
     case 3:
+      fmt.Println("\n=====================\n")
       list.RemoveLast()
+      fmt.Println("\n=====================\n")
       goto here
     case 4:
       var pos int
+      var val int
       fmt.Println("Enter position to Update : ")
       fmt.Scanln(&pos)
-      list.EditElementByPos(pos)
-
+      fmt.Println("Enter value to Update : ")
+      fmt.Scanln(&val)
+      fmt.Println("\n=====================\n")
+      list.EditElementByPos(pos, val)
+      fmt.Println("\n=====================\n")
       goto here
     case 5:
        fmt.Println("\n=====================\n")
-      list.PrintList()
+       list.PrintList()
        fmt.Println("\n=====================\n")
       goto here
     default:
